@@ -74,7 +74,10 @@ body {
 /* .items {
 	padding: 0;
 } */
-.image__title {
+.video__title,
+.image__title,
+.todo__title,
+.note__title {
 	color: var(--color-white);
 }
 .footer {
