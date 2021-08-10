@@ -3,7 +3,7 @@ import { BaseComponent, Component } from '../component.js';
 export interface SectionContainer extends Composable {
     setOnCloseListener(listener: OnCloseListener): void;
 }
-type OnCloseListener = () => void;
+export type OnCloseListener = () => void;
 export class PageItemComponent extends BaseComponent<HTMLElement> implements SectionContainer {
     private closeListener?: OnCloseListener;
     constructor() {

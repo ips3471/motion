@@ -4,6 +4,7 @@
 	--color-black: #000000;
 	--color-dark-grey: #2a2a2a80;
 	--color-light-grey: #d0d0d0;
+	--color-transparent-black: #00000080;
 }
 * {
 	box-sizing: border-box;
@@ -89,6 +90,36 @@ body {
 	color: var(--color-red);
 	margin: 0;
 	line-height: 5rem;
+}
+
+/* ***input-dialog- */
+.dialog {
+	background-color: var(--color-transparent-black);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 45rem;
+	height: 15rem;
+}
+.dialog-close:hover,
+.dialog-submit:hover {
+	opacity: 0.5;
+}
+.dialog-close {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	height: 3rem;
+	background-color: var(--color-white);
+	outline: none;
+	border: none;
+}
+.dialog-submit {
+	height: 3rem;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 }
 
 @media screen and (max-width: 1000px) {
