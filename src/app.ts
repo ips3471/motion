@@ -1,9 +1,9 @@
 import { Component } from './components/component.js';
-import { InputDialog } from './components/input-dialog.js';
+import { InputDialog, InputImageContainer } from './components/input-dialog.js';
 import { ImageComponent } from './components/page/item/image.js';
-import { NoteComponent } from './components/page/item/note.js';
-import { TodoComponent } from './components/page/item/todo.js';
-import { VideoComponent } from './components/page/item/video.js';
+// import { NoteComponent } from './components/page/item/note.js';
+// import { TodoComponent } from './components/page/item/todo.js';
+// import { VideoComponent } from './components/page/item/video.js';
 import { Composable, PageComponent, PageItemComponent } from './components/page/page.js';
 
 class App {
@@ -12,30 +12,23 @@ class App {
         this.page = new PageComponent(PageItemComponent); 
         this.page.attachTo(appRoot);
         
-        const image = new ImageComponent('Image Title', 'https://picsum.photos/400/250');
-        this.page.addChild(image);
 
-        const video = new VideoComponent('Video Title', 'https://www.youtube.com/embed/w0cyk_1F-Rc');
-        this.page.addChild(video);
-
-        const note = new NoteComponent('this is note Title', 'this is note Body');
-        this.page.addChild(note);
-
-        const toDo = new TodoComponent('Todo Title', 'Todo item');
-        this.page.addChild(toDo);
-    
         const imageBtn = document.querySelector('#new-image')! as HTMLButtonElement;
         imageBtn.addEventListener('click', () => {
             if(document.querySelector('.dialog')) {
                 return;
             }
-            const dialog = new InputDialog();
+            const dialog = new InputDialog(InputImageContainer); //image, video, note ...
             dialog.setOnCloseListener(() => {
                 dialog.removeFrom(document.body);
             })
             dialog.setOnSubmitListener(() => {
-                // onSubmit
+                
+                const imageSection = new ImageComponent('Image Title', 'https://picsum.photos/400/250');
+                this.page.addChild(imageSection); // click => 기본요소를 페이지에 생성.
+                // title과 내용을
                 dialog.removeFrom(document.body);
+                
             })
             dialog.attachTo(document.body);
         })
