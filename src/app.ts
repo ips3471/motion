@@ -1,14 +1,12 @@
 import { Component } from './components/component.js';
-import { InputDialog, InputImageContainer } from './components/input-dialog.js';
+import { MediaSectionInput } from './components/dialog/dialog-input/media-input.js';
+import { InputDialog } from './components/dialog/dialog.js';
 import { ImageComponent } from './components/page/item/image.js';
-// import { NoteComponent } from './components/page/item/note.js';
-// import { TodoComponent } from './components/page/item/todo.js';
-// import { VideoComponent } from './components/page/item/video.js';
 import { Composable, PageComponent, PageItemComponent } from './components/page/page.js';
 
 class App {
     private readonly page: Component & Composable;
-    constructor(appRoot: HTMLElement) {
+    constructor(appRoot: HTMLElement, dialogRoot: HTMLElement) {
         this.page = new PageComponent(PageItemComponent); 
         this.page.attachTo(appRoot);
         
@@ -18,23 +16,29 @@ class App {
             if(document.querySelector('.dialog')) {
                 return;
             }
-            const dialog = new InputDialog(InputImageContainer); //image, video, note ...
+            const dialog = new InputDialog();
+            // 여기까지 공통, dialog 생성
+            // image or video => MediaInput 생성
+            // note or todo => TextInput 생성
+            const inputSection = new MediaSectionInput();
+            dialog.addChild(inputSection);
+            dialog.attachTo(dialogRoot);
+
             dialog.setOnCloseListener(() => {
-                dialog.removeFrom(document.body);
+                dialog.removeFrom(dialogRoot);
             })
+
             dialog.setOnSubmitListener(() => {
-                
-                const imageSection = new ImageComponent('Image Title', 'https://picsum.photos/400/250');
-                this.page.addChild(imageSection); // click => 기본요소를 페이지에 생성.
-                // title과 내용을
-                dialog.removeFrom(document.body);
-                
+                const image = new ImageComponent(inputSection.title, inputSection.url); 
+                dialog.removeFrom(dialogRoot);
+                this.page.addChild(image);
+                this.page.attachTo(appRoot);
             })
-            dialog.attachTo(document.body);
         })
     }
 }
 
-new App(document.querySelector('.document')! as HTMLElement);
+new App(
+    document.querySelector('.document')! as HTMLElement, document.body);
 // document section은 동적으로 생성되지 않는, 정적인 요소이므로 type assertion 사용
 
